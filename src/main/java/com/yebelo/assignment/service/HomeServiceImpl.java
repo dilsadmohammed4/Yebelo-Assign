@@ -14,21 +14,28 @@ public class HomeServiceImpl implements HomeService {
     @Override
     public String DigitSum(Long idNum, NumbersData numbersData) {
 
-       numbersData = homeRepository.findById(idNum).get();
+        numbersData = homeRepository.findById(idNum).get();
 
         int sum = 0;
         int n = Integer.parseInt(numbersData.getCategoryCode());
 
-        // Loop to do sum while
-        // sum is not less than
-        // or equal to 9
-        while (n > 0 || sum > 9) {
-            if (n == 0) {
-                n = sum;
-                sum = 0;
+        try {
+            // Loop to do sum while
+            // sum is not less than
+            // or equal to 9
+            while (n > 0 || sum > 9) {
+                if (n == 0) {
+                    n = sum;
+                    sum = 0;
+                    Thread.sleep(5000);
+                    System.out.println(n);
+                }
+
+                sum += n % 10;
+                n /= 10;
             }
-            sum += n % 10;
-            n /= 10;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         String valueSum = Integer.toString(sum);
         System.out.println("Sum of Digits " + sum);
